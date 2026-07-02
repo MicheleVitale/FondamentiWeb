@@ -34,3 +34,4 @@ exports.getAllJobs = async (req, res) => {
         res.status(500).json({ message: "Errore nel recupero degli annunci: ", error });
     }
 };
+

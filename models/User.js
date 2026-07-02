@@ -1,9 +1,9 @@
 const mongoose = require('mongoose'); 
 const userSchema = new mongoose.Schema({
-    username: {
+    email: {
         type: String,
         required: true,
-        unique: true
+        unique: true 
     },
 
     password: {
@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
 
-    ruolo: {
+    role: {
         type: String, 
         enum: ['candidato', 'azienda'],  
         required: true

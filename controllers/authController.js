@@ -16,7 +16,7 @@ exports.register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new User({
-            email,
+            username: email, email,
             password: hashedPassword,
             role
         });
@@ -61,6 +61,7 @@ exports.login = async (req, res) => {
         });
 
     } catch (error) {
+        console.error("ERRORE REALE SUL SERVER:", error);
         res.status(500).json({ message: "Errore durante il login: ", error });
     }
 };
