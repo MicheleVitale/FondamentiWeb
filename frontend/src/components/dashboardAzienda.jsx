@@ -35,7 +35,7 @@ function DashboardAzienda() {
 
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:5000/api/jobs", {
+            const response = await fetch("http://localhost:3000/api/jobs", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -69,7 +69,7 @@ function DashboardAzienda() {
     const fetchMyJobs = async () => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:5000/api/jobs", {
+            const response = await fetch("http://localhost:3000/api/jobs", {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -95,6 +95,10 @@ function DashboardAzienda() {
             setError("Impossibile connettersi al server per caricare gli annunci.");
         }
     }
+
+    const myJobs = jobs.filter(
+        (job) => (job.company?.email || job.company) === emailAzienda
+    );
 
     useEffect(() => {           // recupera il annunci dal server
         fetchMyJobs();
@@ -131,7 +135,7 @@ function DashboardAzienda() {
                         className={activeTab === "bacheca" ? styles.tabActive : styles.tab}
                         onClick={() => setActiveTab("bacheca")}
                     >
-                        Bacheca Annunci ({jobs.length})
+                        Bacheca Annunci ({myJobs.length})
                     </button>
                 </div>
 
@@ -183,14 +187,14 @@ function DashboardAzienda() {
                         </form>
                     ) : (
                         <div className={styles.jobsListScrollable}>
-                            {jobs.length === 0 ? (
+                            {myJobs.length === 0 ? (
                                 <p 
                                     className={styles.emptyMessage}
                                 >
                                     Non hai pubblicato nessun annuncio.
                                 </p>
                             ) : (
-                                jobs.map((job) => (
+                                myJobs.map((job) => (
                                     <div
                                         key={job._id}
                                         className={styles.jobCard}

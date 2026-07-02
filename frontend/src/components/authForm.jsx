@@ -26,7 +26,7 @@ function AuthForm({onLoginSuccess}) {
         setError("");
 
         const endpoint = isLogin ? "login" : "register";            // scelta della route di backend in base alle operazioni dell'utente
-        const url = `http://localhost:5000/api/auth/${endpoint}`;
+        const url = `http://localhost:3000/api/auth/${endpoint}`;
 
         try {
             const respons = await fetch(url, {

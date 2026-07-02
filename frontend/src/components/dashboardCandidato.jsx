@@ -17,7 +17,7 @@ function DashboardCandidato() {
     const fetchAllJobs = async () => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:5000/api/jobs", {
+            const response = await fetch("http://localhost:3000/api/jobs", {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`          // dimostra al server di avere i permessi
