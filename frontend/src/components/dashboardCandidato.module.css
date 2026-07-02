@@ -1,0 +1,131 @@
+.window {
+  width: 750px;
+  box-sizing: border-box;
+}
+
+.titleBar {
+  padding: 4px 6px;
+}
+
+.windowBody {
+  padding: 12px;
+  height: 420px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.statusBar {
+  margin-top: 8px;
+}
+
+.mainLayout {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.leftColumn {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+}
+
+.rightColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionTitle {
+  font-size: 12px;
+  margin-bottom: 6px;
+  color: var(--win-black);
+}
+
+.listBox {
+  background-color: var(--win-light);
+  box-shadow: 
+    inset 1px 1px var(--win-dark), 
+    1px 1px var(--win-light),
+    inset -1px -1px var(--win-light);
+  flex: 1;
+  overflow-y: auto;
+  padding: 2px;
+}
+
+.listBoxItem {
+  padding: 4px 6px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.listBoxItem:hover {
+  background-color: #f0f0f0;
+}
+
+.itemSelected {
+  background-color: var(--win-blue-title) !important;
+  color: var(--win-light) !important;
+}
+
+.emptyText {
+  font-style: italic;
+  color: var(--win-dark);
+  padding: 10px;
+  font-size: 13px;
+}
+
+.detailsPanel {
+  background-color: var(--win-light);
+  box-shadow: 
+    inset 1px 1px var(--win-dark), 
+    1px 1px var(--win-light),
+    inset -1px -1px var(--win-light);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.detailsContent {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.jobTitle {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  color: var(--win-black);
+}
+
+.metaInfo {
+  font-size: 11px;
+  color: var(--win-dark);
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.descriptionBox {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.4;
+  overflow-y: auto;
+  border-top: 1px dotted var(--win-dark);
+  padding-top: 12px;
+  color: var(--win-black);
+}
+
+.actionContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+  padding-top: 8px;
+}

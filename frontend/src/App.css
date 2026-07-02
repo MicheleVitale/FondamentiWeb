@@ -22,6 +22,62 @@ body {
   min-height: 100vh;
 }
 
+.win-window {
+  background-color: var(--win-gray);
+  box-shadow: 
+    inset 1px 1px var(--win-light), 
+    inset -1px -1px var(--win-dark), 
+    2px 2px var(--win-black);
+  padding: 3px;
+}
+
+.win-title-bar {
+  background: var(--win-blue-title);
+  color: var(--win-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.win-menu-bar {
+  display: flex;
+  gap: 12px;
+  padding: 4px 8px;
+  background-color: var(--win-gray);
+  border-bottom: 1px solid var(--win-dark);
+  font-size: 13px;
+}
+
+.win-menu-item {
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.win-menu-item:hover {
+  background-color: var(--win-blue-title);
+  color: var(--win-light);
+}
+
+.win-status-bar {
+  display: flex;
+  gap: 4px;
+  box-sizing: border-box;
+}
+
+.win-status-field {
+  flex: 1;
+  padding: 2px 6px;
+  font-size: 12px;
+  background-color: var(--win-gray);
+  box-shadow: 
+    inset 1px 1px var(--win-dark), 
+    1px 1px var(--win-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .form-success-msg {
   font-size: 11px;
   color: #008000;

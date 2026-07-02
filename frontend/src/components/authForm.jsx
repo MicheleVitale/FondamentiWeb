@@ -13,9 +13,9 @@ function AuthForm({onLoginSuccess}) {
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e) => {          // si attiva alla digitazione
         const {name, value} = e.target;
-
+ 
         setFormData({...formData, [name]: value});
     }
 
@@ -25,7 +25,7 @@ function AuthForm({onLoginSuccess}) {
         setMessage("");
         setError("");
 
-        const endpoint = isLogin ? "login" : "register";
+        const endpoint = isLogin ? "login" : "register";            // scelta della route di backend in base alle operazioni dell'utente
         const url = `http://localhost:5000/api/auth/${endpoint}`;
 
         try {
@@ -47,22 +47,20 @@ function AuthForm({onLoginSuccess}) {
 
 
             if (isLogin) {
-                console.log('Login effettuato con successo! Dati dal server:', data);
-
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("role", data.user.role);
                 localStorage.setItem("email", data.user.email);
 
-                onLoginSuccess(data.token, data.user.role);
+                onLoginSuccess(data.token, data.user.role);         // comunica ad App.js che il login è andata a buon fine passando i dati
             }
             else {
-                setisLogin(true);
+                setisLogin(true);           // registrazione andata a buon fine, passaggio al login
             }
         }
         catch (err) {
             setError(err.message);
         }
-        finally {
+        finally {           // a prescindere dall'esito svuota i campi del form
             setFormData({
                 email: "",
                 password: "",
@@ -72,9 +70,9 @@ function AuthForm({onLoginSuccess}) {
     }
 
     return (
-        <div className={styles.windowContainer}>
+        <div className={`win-window ${styles.windowContainer}`}>
 
-            <div className={styles.titleBar}>
+            <div className={`win-title-bar ${styles.titleBar}`}>
                 <span>{isLogin ? "Accedi" : "Registrati"}</span>
             </div>
 

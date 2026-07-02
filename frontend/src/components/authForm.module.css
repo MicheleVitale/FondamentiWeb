@@ -1,21 +1,9 @@
 .windowContainer {
   width: 380px;
-  background-color: var(--win-gray);
-  box-shadow: 
-    inset 1px 1px var(--win-light), 
-    inset -1px -1px var(--win-dark), 
-    2px 2px var(--win-black);
-  padding: 3px;
 }
 
 .titleBar {
-  background: var(--win-blue-title);
-  color: var(--win-light);
   padding: 3px 6px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
 }
 
 .windowBody {

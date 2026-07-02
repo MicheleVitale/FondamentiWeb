@@ -2,25 +2,26 @@ import { useState, useEffect } from "react";
 import styles from "./dashboardAzienda.module.css";
 
 function DashboardAzienda() {
-    const emailAzienda = localStorage.getItem("email");
+    const emailAzienda = localStorage.getItem("email");         // recupera la informazioni dal browser al momento del login
     const ruoloUtente = localStorage.getItem("role");
-    const [activeTab, setActiveTab] = useState("pubblica");
+
+    const [activeTab, setActiveTab] = useState("pubblica");         // gestisce la scheda visibile form/lista annunci
     const [formData, setFormData] = useState({
         title: "",
         description: "",
-        company: emailAzienda
+        company: emailAzienda           // auto-assengna la l'email di chi è loggato
     });
 
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
-    const [jobs, setJobs] = useState([]);
+    const [jobs, setJobs] = useState([]);           // contiene la lista degli annunci scaricati dal server
 
     const handleLogout = () => {
         localStorage.clear();
-        window.location.reload();
+        window.location.reload();           // ricarica la pagina, non essendoci più il token, App.js ci rimanda al login
     }
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e) => {          // si attiva alla digitazione
         const {name, value} = e.target;
 
         setFormData({ ...formData, [name]: value });
@@ -38,19 +39,17 @@ function DashboardAzienda() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                    "Authorization": `Bearer ${token}`          // dimostra al server di avere i permessi
                 },
                 body: JSON.stringify(formData)
             });
 
-            if (response.status === 400 || response.status === 401) {
+            if (response.status === 400 || response.status === 401) {           // se il token è scaduto o l'utente non ha i permessi, forza il logout
                 alert("La tua sessione è scaduta. Effettua di nuovo il login.");
                 localStorage.clear();
                 window.location.reload();
                 return;
             }
-
-            console.log("STATUS DELLA RISPOSTA:", response.status);
 
             const data = await response.json();
 
@@ -59,7 +58,7 @@ function DashboardAzienda() {
             }
 
             setMessage("Annuncio pubblicato con successo!");
-            setFormData({title: "", description: "", company: emailAzienda});
+            setFormData({title: "", description: "", company: emailAzienda});           // se la pubblicazione ha successo, svuota i campi e aggiorna la bacheca in background
             fetchMyJobs();
         }
         catch (err) {
@@ -77,7 +76,7 @@ function DashboardAzienda() {
                 }
             });
 
-            if (response.status === 400 || response.status === 401) {
+            if (response.status === 400 || response.status === 401) {           // anche qui controlla se la sessione è ancora valida
                 localStorage.clear();
                 window.location.reload();
                 return;
@@ -85,8 +84,7 @@ function DashboardAzienda() {
 
             const data = await response.json();
 
-            if (response.ok) {
-                console.log("ECCO I TUOI ANNUNCI DAL SERVER:", data);
+            if (response.ok) {          // se la risposta è OK, salva gli annunci nello stato "jobs"
                 setJobs(data);
             }
             else {
@@ -98,13 +96,13 @@ function DashboardAzienda() {
         }
     }
 
-    useEffect(() => {
+    useEffect(() => {           // recupera il annunci dal server
         fetchMyJobs();
-    }, []);
+    }, []);         // avendo l'array vuoto [] esegue la funzione solo un volta quando la dashboard viene aperta
 
     return (
-        <div className={styles.window}>
-            <div className={styles.titleBar}>
+        <div className={`win-window ${styles.window}`}>
+            <div className={`win-title-bar ${styles.titleBar}`}>
                 <span>Gestione annunci aziendali</span>
                 <button
                     onClick={handleLogout}
@@ -115,10 +113,10 @@ function DashboardAzienda() {
                 </button>
             </div>
             
-            <div className={styles.menuBar}>
-                <span className={styles.menuItem}>File</span>
-                <span className={styles.menuItem}>Opzioni</span>
-                <span className={styles.menuItem}>?</span>
+            <div className="win-menu-bar">
+                <span className="win-menu-item">File</span>
+                <span className="win-menu-item">Opzioni</span>
+                <span className="win-menu-item">?</span>
             </div>
 
             <div className={styles.windowBody}>
@@ -213,10 +211,10 @@ function DashboardAzienda() {
                 </div>
             </div>
 
-            <div className={styles.statusBar}>
-                <div className={styles.statusField}>Pronto</div>
-                <div className={styles.statusField}>ID: {emailAzienda}</div>
-                <div className={styles.statusField}>Ruolo: {ruoloUtente ? ruoloUtente.toUpperCase() : "AZIENDA"}</div>
+            <div className={`win-status-bar ${styles.statusBar}`}>
+                <div className="win-status-field">Pronto</div>
+                <div className="win-status-field">ID: {emailAzienda}</div>
+                <div className="win-status-field">Ruolo: {ruoloUtente.toUpperCase()}</div>
             </div>
         </div>
     )
