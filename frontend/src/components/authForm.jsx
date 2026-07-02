@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function AuthForm() {
+function AuthForm({onLoginSuccess}) {
     const [isLogin, setisLogin] = useState(true);
 
     const [formData, setFormData] = useState({
@@ -47,11 +47,12 @@ function AuthForm() {
 
             if (isLogin) {
                 console.log('Login effettuato con successo! Dati dal server:', data);
+
                 localStorage.setItem("token", data.token);
-                localStorage.setItem("ruolo", data.user.role);
+                localStorage.setItem("role", data.user.role);
                 localStorage.setItem("email", data.user.email);
 
-                window.location.reload();
+                onLoginSuccess(data.token, data.user.role);
             }
             else {
                 setisLogin(true);
