@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
+import styles from "./dashboardAzienda.module.css";
 
 function DashboardAzienda() {
     const emailAzienda = localStorage.getItem("email");
     const ruoloUtente = localStorage.getItem("role");
+    const [activeTab, setActiveTab] = useState("pubblica");
     const [formData, setFormData] = useState({
         title: "",
-        description: ""
+        description: "",
+        company: emailAzienda
     });
 
     const [message, setMessage] = useState("");
@@ -56,7 +59,7 @@ function DashboardAzienda() {
             }
 
             setMessage("Annuncio pubblicato con successo!");
-            setFormData({title: "", description: ""});
+            setFormData({title: "", description: "", company: emailAzienda});
             fetchMyJobs();
         }
         catch (err) {
@@ -83,6 +86,7 @@ function DashboardAzienda() {
             const data = await response.json();
 
             if (response.ok) {
+                console.log("ECCO I TUOI ANNUNCI DAL SERVER:", data);
                 setJobs(data);
             }
             else {
@@ -99,60 +103,120 @@ function DashboardAzienda() {
     }, []);
 
     return (
-        <div>
-            <div>
-                <h2>Dashboard Azienda</h2>
-                <button onClick={handleLogout}>Logout</button>
+        <div className={styles.window}>
+            <div className={styles.titleBar}>
+                <span>Gestione annunci aziendali</span>
+                <button
+                    onClick={handleLogout}
+                    className="win-btn"
+                    style={{ fontWeight: "bold", fontSize: "11px", padding: "0 6px" }}
+                >
+                    X
+                </button>
+            </div>
+            
+            <div className={styles.menuBar}>
+                <span className={styles.menuItem}>File</span>
+                <span className={styles.menuItem}>Opzioni</span>
+                <span className={styles.menuItem}>?</span>
             </div>
 
-            <p>Benvenuto, {emailAzienda}!
-                Ruolo: <span>{ruoloUtente ? ruoloUtente.toUpperCase() : ""}</span>
-            </p>
-            <hr />
+            <div className={styles.windowBody}>
+                <div className={styles.tabContainer}>
+                    <button 
+                        className={activeTab === "pubblica" ? styles.tabActive : styles.tab}
+                        onClick={() => setActiveTab("pubblica")}
+                    >
+                        Nuovo Annuncio
+                    </button>
+                    <button 
+                        className={activeTab === "bacheca" ? styles.tabActive : styles.tab}
+                        onClick={() => setActiveTab("bacheca")}
+                    >
+                        Bacheca Annunci ({jobs.length})
+                    </button>
+                </div>
 
-            <div>
-                <h3>Pubblica un nuovo annuncio di lavoro</h3>
-                {message && <p>{message}</p>}
-                {error && <p>{error}</p>}
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label>Titolo: </label>
-                        <input
-                            type="text"
-                            name="title"
-                            value={formData.title}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
+                <div className={styles.tabContentPanel}>
+                    {activeTab ===  "pubblica" ? (
+                        <form onSubmit={handleSubmit}>
+                            <span
+                                className={styles.formNotice}
+                            >
+                                Compilare i campi record di inserimento:
+                            </span>
 
-                    <div>
-                        <label>Descrizione: </label>
-                        <textarea
-                            type="text"
-                            name="description"
-                            value={formData.description}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
+                            {message && <p className="form-success-msg">{message}</p>}
+                            {error && <p className="form-error-msg">{error}</p>}
 
-                    <button type="submit">Pubblica Annuncio</button>
-                </form>
-            </div>
+                            <div className={styles.formGroup}>
+                                <label>Titolo della posizione: </label>
+                                <input
+                                    type="text"
+                                    name="title"
+                                    value={formData.title}
+                                    onChange={handleInputChange}
+                                    required
+                                    className="win-input"
+                                />
+                            </div>
 
-            <div>
-                <h3>Bacheca annunci</h3>
-                {jobs.length === 0 ? (
-                    <p>Non hai pubblicato nessun annuncio.</p>
-                ) : (
-                    jobs.map((job) => (
-                        <div key={job._id}>
-                            <h4>{job.title}</h4>
-                            <p>{job.description}</p>
+                            <div className={styles.formGroup}>
+                                <label>Descrizione: </label>
+                                <textarea
+                                    type="text"
+                                    name="description"
+                                    value={formData.description}
+                                    onChange={handleInputChange}
+                                    required
+                                    className={`win-textarea ${styles.descriptionTextarea}`}
+                                />
+                            </div>
+
+                            <div className={styles.formActions}>
+                                <button
+                                    type="submit"
+                                    className="win-btn"
+                                    style={{ minWidth: "100px" }}
+                                >
+                                    Pubblica Annuncio
+                                </button>
+                            </div>
+                        </form>
+                    ) : (
+                        <div className={styles.jobsListScrollable}>
+                            {jobs.length === 0 ? (
+                                <p 
+                                    className={styles.emptyMessage}
+                                >
+                                    Non hai pubblicato nessun annuncio.
+                                </p>
+                            ) : (
+                                jobs.map((job) => (
+                                    <div
+                                        key={job._id}
+                                        className={styles.jobCard}
+                                    >
+                                        <h4>{job.title}</h4>
+                                        <p>{job.description}</p>
+
+                                        <div
+                                            className={styles.jobAuthor}
+                                        >
+                                            Pubblicato da: {job.company?.email || job.company || "Dato non disponibile"}
+                                        </div>
+                                    </div>
+                                ))
+                            )}
                         </div>
-                    ))
-                )}
+                    )}
+                </div>
+            </div>
+
+            <div className={styles.statusBar}>
+                <div className={styles.statusField}>Pronto</div>
+                <div className={styles.statusField}>ID: {emailAzienda}</div>
+                <div className={styles.statusField}>Ruolo: {ruoloUtente ? ruoloUtente.toUpperCase() : "AZIENDA"}</div>
             </div>
         </div>
     )

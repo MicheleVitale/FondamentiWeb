@@ -1,38 +1,113 @@
-.App {
-  text-align: center;
+@import url('https://cdnfonts.com');
+
+:root {
+  --win-bg: #008080;
+  --win-gray: #c0c0c0;
+  --win-light: #ffffff;
+  --win-dark: #808080;
+  --win-black: #000000;
+  --win-blue-title: #000080;
+  --font-family: 'MS Sans Serif', sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--win-bg);
+  color: var(--win-black);
+  -webkit-font-smoothing: none;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;     
+  min-height: 100vh;
 }
 
-.App-link {
-  color: #61dafb;
+.form-success-msg {
+  font-size: 11px;
+  color: #008000;
+  margin: 4px 0 10px 0;
+  padding-left: 2px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-error-msg {
+  font-size: 11px;
+  color: #ff0000;
+  font-weight: bold;
+  margin: 4px 0 10px 0;
+  padding-left: 2px;
+}
+
+.win-btn {
+  background-color: var(--win-gray);
+  border: none;
+  font-family: var(--font-family);
+  font-size: 14px;
+  padding: 4px 12px;
+  color: var(--win-black);
+  box-shadow: 
+    inset 1px 1px var(--win-light),
+    inset -1px -1px var(--win-dark),
+    1px 1px var(--win-black);
+  cursor: pointer;
+}
+
+.win-btn:active {
+  box-shadow: 
+    inset 1px 1px var(--win-dark), 
+    inset -1px -1px var(--win-light), 
+    1px 1px var(--win-black);
+  padding: 5px 11px 3px 13px;
+}
+
+.win-input, .win-textarea {
+  background-color: var(--win-light);
+  font-family: var(--font-family);
+  font-size: 14px;
+  padding: 4px;
+  border: none;
+  box-sizing: border-box;
+  box-shadow: 
+    inset 1px 1px var(--win-dark), 
+    1px 1px var(--win-light),
+    inset -1px -1px var(--win-light);
+  outline: none;
+}
+
+.win-input:focus, .win-textarea:focus {
+  outline: 1px dotted var(--win-black);
+}
+
+.win-badge {
+  background-color: var(--win-gray);
+  border: 1px solid var(--win-dark);
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #dfdfdf;
+  background-image: linear-gradient(45deg, #cbd0d0 25%, transparent 25%, transparent 75%, #cbd0d0 75%, #cbd0d0), 
+                    linear-gradient(45deg, #cbd0d0 25%, var(--win-light) 25%, var(--win-light) 75%, #cbd0d0 75%, #cbd0d0);
+  background-size: 2px 2px;
+  background-position: 0 0, 1px 1px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--win-gray);
+  box-shadow: 
+    inset 1px 1px var(--win-light), 
+    inset -1px -1px var(--win-dark), 
+    1px 1px var(--win-black);
+}
+
+::-webkit-scrollbar-thumb:active {
+  box-shadow: 
+    inset 1px 1px var(--win-dark), 
+    inset -1px -1px var(--win-light), 
+    1px 1px var(--win-black);
 }

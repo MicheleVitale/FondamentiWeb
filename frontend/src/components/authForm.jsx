@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./authForm.module.css"
 
 function AuthForm({onLoginSuccess}) {
     const [isLogin, setisLogin] = useState(true);
@@ -71,64 +72,82 @@ function AuthForm({onLoginSuccess}) {
     }
 
     return (
-        <div>
-            <h2>{isLogin ? "Accedi" : "Registrati"}</h2>
-            {message && <p>{message}</p>}
-            {error && <p>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email: </label>
-                    <input
-                        type="email" 
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
+        <div className={styles.windowContainer}>
 
-                <div>
-                    <label>Password: </label>
-                    <input
-                        type="password" 
-                        name="password"
-                        value={formData.password}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
+            <div className={styles.titleBar}>
+                <span>{isLogin ? "Accedi" : "Registrati"}</span>
+            </div>
 
-                {!isLogin && (
-                    <div>
-                        <label>Ruolo: </label>
-                        <select 
-                            name="role"
-                            value={formData.role}
+            <div className={styles.windowBody}>
+                {message && <p className="form-success-msg">{message}</p>}
+                {error && <p className="form-error-msg">{error}</p>}
+
+                <form onSubmit={handleSubmit}>
+                    <div className={styles.formGroup}>
+                        <label>Email: </label>
+                        <input
+                            type="email" 
+                            name="email"
+                            value={formData.email}
                             onChange={handleInputChange}
-                            required>
-                                <option value="candidato">Candidato</option>
-                                <option value="azienda">Azienda</option>
-                        </select>
+                            required
+                            className="win-input"
+                        />
                     </div>
-                )}
 
-                <button type="submit">
-                    {isLogin ? "Accedi" : "Crea Account"}
-                </button>
-            </form>
+                    <div className={styles.formGroup}>
+                        <label>Password: </label>
+                        <input
+                            type="password" 
+                            name="password"
+                            value={formData.password}
+                            onChange={handleInputChange}
+                            required
+                            className="win-input"
+                        />
+                    </div>
 
-            <p>
-                {isLogin ? "Non hai ancora un account? " : "Hai già un account? "}
-                <a 
-                    href="#"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        setisLogin(!isLogin);
-                    }}
-                >
-                    {isLogin ? "Registrati qui" : "Accedi qui"}
-                </a>
-            </p>
+                    {!isLogin && (
+                        <div className={styles.formGroup}>
+                            <label>Ruolo: </label>
+                            <div className={styles.selectWrapper}>
+                                <select 
+                                    name="role"
+                                    value={formData.role}
+                                    onChange={handleInputChange}
+                                    required
+                                    className={styles.selectRetro}
+                                >
+                                        <option value="candidato">Candidato</option>
+                                        <option value="azienda">Azienda</option>
+                                </select>
+
+                                <div className={styles.selectBtn}>
+                                    <div className={styles.arrowIcon}></div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className={styles.actionBar}>
+                        <button
+                            type="submit"
+                            className={`win-btn ${styles.actionBtn}`}
+                        >
+                            {isLogin ? "OK" : "Salva"}
+                        </button>
+                        <button 
+                            type="button" 
+                            className={`win-btn ${styles.actionBtn}`}
+                            onClick={() => { setisLogin(!isLogin); setError(""); setMessage(""); }}
+                        >
+                            {isLogin ? "Registrati" : "Accedi"}
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
         </div>
     )
 }

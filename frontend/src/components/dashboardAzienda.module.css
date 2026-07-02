@@ -1,0 +1,175 @@
+.window {
+  width: 700px;
+  background-color: var(--win-gray);
+  box-shadow: 
+    inset 1px 1px var(--win-light), 
+    inset -1px -1px var(--win-dark), 
+    2px 2px var(--win-black);
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+.windowBody {
+  padding: 12px;
+  height: 440px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.titleBar {
+  background: var(--win-blue-title);
+  color: var(--win-light);
+  padding: 4px 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.menuBar {
+  display: flex;
+  gap: 12px;
+  padding: 4px 8px;
+  background-color: var(--win-gray);
+  border-bottom: 1px solid var(--win-dark);
+  font-size: 13px;
+}
+
+.menuItem {
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.menuItem:hover {
+  background-color: var(--win-blue-title);
+  color: var(--win-light);
+}
+
+.tabContainer {
+  display: flex;
+  margin-bottom: -2px;
+  z-index: 2;
+}
+
+.tab {
+  padding: 6px 16px;
+  font-size: 13px;
+  background-color: var(--win-gray);
+  border: none;
+  cursor: pointer;
+  box-shadow: 
+    inset 1px 1px var(--win-light), 
+    inset -1px 0px var(--win-dark),
+    1px 0px var(--win-black);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.tabActive {
+  composes: tab;
+  font-weight: bold;
+  padding-bottom: 8px;
+  margin-top: -2px;
+  box-shadow: 
+    inset 1px 1px var(--win-light), 
+    inset -1px 0px var(--win-gray),
+    1px 0px var(--win-black);
+}
+
+.tabContentPanel {
+  background-color: var(--win-gray);
+  box-shadow: 
+    inset 1px 1px var(--win-light), 
+    inset -1px -1px var(--win-dark), 
+    1px 1px var(--win-black);
+  padding: 20px 24px;
+  flex: 1;
+  box-sizing: border-box;
+  overflow-y: auto;   
+}
+
+.formNotice {
+  display: block;
+  margin-bottom: 14px;
+  font-style: italic;
+}
+
+.descriptionTextarea {
+  height: 120px;
+  resize: none;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.emptyMessage {
+  font-style: italic;
+  color: var(--win-dark);
+  margin: 10px 0;
+}
+
+.jobCard {
+  background-color: var(--win-light);
+  border: 1px solid var(--win-dark);
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.jobCard h4 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: var(--win-black);
+}
+
+.jobCard p {
+  margin: 0;
+  font-size: 13px;
+  color: #404040;
+}
+
+.jobAuthor {
+  margin-top: 10px; 
+  font-size: 11px; 
+  color: var(--win-dark); 
+  border-top: 1px dotted var(--win-gray); 
+  padding-top: 6px;
+  font-style: italic;
+}
+
+.jobsListScrollable {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 2px;
+}
+
+.statusBar {
+  margin-top: 16px;
+  display: flex;
+  gap: 4px;
+}
+
+.statusField {
+  flex: 1;
+  padding: 2px 6px;
+  font-size: 12px;
+  background-color: var(--win-gray);
+  box-shadow: 
+    inset 1px 1px var(--win-dark), 
+    1px 1px var(--win-light);
+}
