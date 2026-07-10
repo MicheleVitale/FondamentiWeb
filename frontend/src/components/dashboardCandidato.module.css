@@ -129,3 +129,21 @@
   margin-top: 12px;
   padding-top: 8px;
 }
+
+
+
+.detailsHeader h2 {
+  margin: 0 0 5px 0; 
+}
+
+.detailsHeader span {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.descriptionBox {
+  padding: 0; /* Rimuove padding interni asimmetrici */
+  margin-bottom: 25px;
+  line-height: 1.5; /* Rende il testo più leggibile */
+}
+

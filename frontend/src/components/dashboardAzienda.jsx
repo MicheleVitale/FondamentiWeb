@@ -15,6 +15,7 @@ function DashboardAzienda() {
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
     const [jobs, setJobs] = useState([]);           // contiene la lista degli annunci scaricati dal server
+    const [candidature, setCandidature] = useState([]);
 
     const handleLogout = () => {
         localStorage.clear();
@@ -96,6 +97,25 @@ function DashboardAzienda() {
         }
     }
 
+    const fetchCandidature = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch("http://localhost:3000/api/jobs/company-jobs", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setCandidature(data);
+            }
+        } catch (error) {
+            console.error("Errore nel caricamento delle candidature:", error);
+        }
+    }
+
     const myJobs = jobs.filter(
         (job) => (job.company?.email || job.company) === emailAzienda
     );
@@ -104,10 +124,16 @@ function DashboardAzienda() {
         fetchMyJobs();
     }, []);         // avendo l'array vuoto [] esegue la funzione solo un volta quando la dashboard viene aperta
 
+    useEffect(() => {
+        if (activeTab === "candidature") {
+            fetchCandidature();
+        }
+    }, [activeTab]);
+
     return (
         <div className={`win-window ${styles.window}`}>
             <div className={`win-title-bar ${styles.titleBar}`}>
-                <span>Gestione annunci aziendali</span>
+                <span>Gestisci annunci aziendali e candidature, {emailAzienda.split('@')[0]}</span>
                 <button
                     onClick={handleLogout}
                     className="win-btn"
@@ -137,15 +163,21 @@ function DashboardAzienda() {
                     >
                         Bacheca Annunci ({myJobs.length})
                     </button>
+                    <button 
+                        className={activeTab === "candidature" ? styles.tabActive : styles.tab}
+                        onClick={() => setActiveTab("candidature")}
+                    >
+                        Candidature
+                    </button>
                 </div>
 
                 <div className={styles.tabContentPanel}>
-                    {activeTab ===  "pubblica" ? (
+                    {activeTab === "pubblica" && (
                         <form onSubmit={handleSubmit}>
                             <span
                                 className={styles.formNotice}
                             >
-                                Compilare i campi record di inserimento:
+                                Inserire Titolo e Descrizione della posizione 
                             </span>
 
                             {message && <p className="form-success-msg">{message}</p>}
@@ -185,7 +217,9 @@ function DashboardAzienda() {
                                 </button>
                             </div>
                         </form>
-                    ) : (
+                    )}
+
+                    {activeTab === "bacheca" && (
                         <div className={styles.jobsListScrollable}>
                             {myJobs.length === 0 ? (
                                 <p 
@@ -206,6 +240,38 @@ function DashboardAzienda() {
                                             className={styles.jobAuthor}
                                         >
                                             Pubblicato da: {job.company?.email || job.company || "Dato non disponibile"}
+                                        </div>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    )}
+
+                    {activeTab === "candidature" && (
+                        <div className={styles.jobsListScrollable}>
+                            {candidature.length === 0 ? (
+                                <p className={styles.emptyMessage}>
+                                    Non hai ancora ricevuto candidature o pubblicato annunci.
+                                </p>
+                            ) : (
+                                candidature.map((job) => (
+                                    <div
+                                        key={job._id}
+                                        className={styles.jobCard}
+                                    >
+                                        <h4>{job.title}</h4>
+                                        
+                                        <div style={{ marginTop: "10px", fontSize: "14px" }}>
+                                            <strong>Candidati ricevuti:</strong>
+                                            {job.applicants && job.applicants.length > 0 ? (
+                                                <ul style={{ paddingLeft: "20px", marginTop: "5px", marginBottom: "0" }}>
+                                                    {job.applicants.map((candidato, index) => (
+                                                        <li key={index}>{candidato.email}</li>
+                                                    ))}
+                                                </ul>
+                                            ) : (
+                                                <p style={{ margin: "5px 0", fontStyle: "italic" }}>Nessun candidato, per ora...</p>
+                                            )}
                                         </div>
                                     </div>
                                 ))
