@@ -130,3 +130,38 @@
 .statusBar {
   margin-top: 16px;
 }
+
+.retroSeparator {
+  border-top: 1px dotted var(--win-dark);
+  margin: 8px 0;
+  width: 100%;
+}
+
+.candidatesContainer {
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+.retroListbox {
+  background-color: var(--win-light);
+  border-top: 2px solid var(--win-dark);
+  border-left: 2px solid var(--win-dark);
+  border-bottom: 2px solid var(--win-light);
+  border-right: 2px solid var(--win-light);
+  padding: 2px;
+  margin: 6px 0 0 0;
+  list-style-type: none;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.retroListbox li {
+  padding: 2px 4px;
+  color: var(--win-black);
+}
+
+.retroListbox li:hover {
+  background-color: var(--win-blue-title);
+  color: var(--win-light);
+  cursor: default;
+}

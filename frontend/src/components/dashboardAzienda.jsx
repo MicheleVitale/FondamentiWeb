@@ -133,7 +133,7 @@ function DashboardAzienda() {
     return (
         <div className={`win-window ${styles.window}`}>
             <div className={`win-title-bar ${styles.titleBar}`}>
-                <span>Gestisci annunci aziendali e candidature, {emailAzienda.split('@')[0]}</span>
+                <span>Gestione annunci aziendali</span>
                 <button
                     onClick={handleLogout}
                     className="win-btn"
@@ -177,7 +177,7 @@ function DashboardAzienda() {
                             <span
                                 className={styles.formNotice}
                             >
-                                Inserire Titolo e Descrizione della posizione 
+                                Inserire i dati per l'annuncio:
                             </span>
 
                             {message && <p className="form-success-msg">{message}</p>}
@@ -260,17 +260,30 @@ function DashboardAzienda() {
                                         className={styles.jobCard}
                                     >
                                         <h4>{job.title}</h4>
+
+                                        <div className={styles.retroSeparator}></div>
                                         
-                                        <div style={{ marginTop: "10px", fontSize: "14px" }}>
-                                            <strong>Candidati ricevuti:</strong>
+                                        <div className={styles.candidatesContainer}>
+                                            Candidature ricevute:
+
                                             {job.applicants && job.applicants.length > 0 ? (
-                                                <ul style={{ paddingLeft: "20px", marginTop: "5px", marginBottom: "0" }}>
+                                                <ul
+                                                    className={styles.retroListbox}
+                                                >
                                                     {job.applicants.map((candidato, index) => (
-                                                        <li key={index}>{candidato.email}</li>
+                                                        <li 
+                                                            key={index}
+                                                        >
+                                                            {candidato.email}
+                                                        </li>
                                                     ))}
                                                 </ul>
                                             ) : (
-                                                <p style={{ margin: "5px 0", fontStyle: "italic" }}>Nessun candidato, per ora...</p>
+                                                <p
+                                                    className={styles.emptyMessage}
+                                                >
+                                                    Nessun candidato, per ora...
+                                                </p>
                                             )}
                                         </div>
                                     </div>

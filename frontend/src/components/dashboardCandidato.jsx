@@ -65,30 +65,16 @@ function DashboardCandidato() {
 
             if (response.ok) {
                 alert("Candidatura inviata con successo!");
-            } else {
+            }
+            else {
                 alert(data.message || "Errore durante l'invio della candidatura.");
             }
-        } catch (error) {
+        }
+        catch (error) {
             console.error("Errore di rete:", error);
             alert("Impossibile connettersi al server.");
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     useEffect(() => {           // recupera il annunci dal server
         fetchAllJobs();
@@ -96,12 +82,13 @@ function DashboardCandidato() {
 
     return (
         <div className={`win-window ${styles.window}`}>
+
             <div className={`win-title-bar ${styles.titleBar}`}>
-                <span>Esplora gli annunci di lavoro presenti in Jobby, {emailUtente.split('@')[0]}</span>
+                <span>Esplora annunci di lavoro</span>
                 <button
                     onClick={handleLogout}
                     className="win-btn"
-                    style={{ fontWeight: "bold", fontSize: "11px", padding: "0 6px" }}
+                    style={{ fontSize: "11px", padding: "0 6px", fontWeight: "bold" }}
                 >
                     X
                 </button>
@@ -114,33 +101,41 @@ function DashboardCandidato() {
             </div>
 
             <div className={styles.windowBody}>
+
+                {error && <p className="form-error-msg">{error}</p>}
+
                 <div className={styles.mainLayout}>
                     
-                    {/* COLONNA SINISTRA: LISTA ANNUNCI */}
                     <div className={styles.leftColumn}>
-                        <div className={styles.sectionTitle}>Selezionare una posizione:</div>
+                        <span className={styles.sectionTitle}>Selezionare una posizione:</span>
+
                         <div className={styles.listBox}>
-                            {jobs.map((job) => (
-                                <div
-                                    key={job._id}
-                                    className={`${styles.listBoxItem} ${selectedJob?._id === job._id ? styles.itemSelected : ""}`}
-                                    onClick={() => setSelectedJob(job)}
-                                >
-                                    {job.title}
-                                </div>
-                            ))}
+                            {jobs.length === 0 ? (
+                                <p className={styles.emptyText}>Nessun annuncio disponibile.</p>
+                            ) : (
+                                jobs.map((job) => (
+                                    <div
+                                        key={job._id}
+                                        className={`${styles.listBoxItem} ${selectedJob?._id === job._id ? styles.itemSelected : ""}`}
+                                        onClick={() => setSelectedJob(job)}
+                                    >
+                                        {job.title}
+                                    </div>
+                                ))
+                            )}
                         </div>
                     </div>
 
-                    {/* COLONNA DESTRA: DETTAGLIO E PULSANTE */}
                     <div className={styles.rightColumn}>
-                        <div className={styles.sectionTitle}>Dettagli record selezionato:</div>
+                        <span className={styles.sectionTitle}>Dettagli record selezionato:</span>
+
                         <div className={styles.detailsPanel}>
                             {selectedJob ? (
-                                    <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "4px 10px" }}>                                    <div className={styles.detailsHeader}>
-                                        <h2>{selectedJob.title}</h2>
-                                        <span>Pubblicato da: {selectedJob.company?.email || selectedJob.company || "Anonima"}</span>
-                                    </div>
+                                <div className={styles.detailsContent}>
+                                    <h3 className={styles.jobTitle}>{selectedJob.title}</h3>
+                                    <span className={styles.metaInfo}>
+                                        Pubblicato da: {selectedJob.company?.email || selectedJob.company || "Anonima"}
+                                    </span>
 
                                     <div className={styles.descriptionBox}>
                                         {selectedJob.description}
