@@ -3,7 +3,7 @@ const Job = require('../models/Job');
 // FUNZIONE PER CREARE L'ANNUNCIO
 exports.createJob = async (req, res) => {
     try {
-        // SCUDO ANTI-CRASH: controlla se req.user esiste prima di leggere l'ID
+        // Controlla se req.user esiste prima di leggere l'ID
         if (!req.user || !req.user.id) {
             return res.status(401).json({ message: "Errore di sicurezza: ID utente mancante. Riprova il login." });
         }
